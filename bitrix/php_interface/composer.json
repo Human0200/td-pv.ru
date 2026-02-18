@@ -1,0 +1,10 @@
+{
+  "autoload": {
+   
+  },
+  "require": {
+    "react/http": "^3@dev",
+    "imangazaliev/didom": "^2.0",
+    "react/async": "^3"
+  }
+}

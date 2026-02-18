@@ -1,0 +1,23 @@
+/*
+.bx-ie .faq-items.flex-grow-1 {
+  flex-basis: 0px;
+}
+*/
+
+/* in detail */
+.detail-block .faq-list .accordion-head {
+  padding: 24px 86px 16px 31px;
+}
+
+.detail-block .faq-list .accordion-head .svg-inline-right-arrow {
+  right: 28px;
+  top: 28px;
+}
+.detail-block .faq-list .accordion-preview {
+  margin-top: 9px;
+  margin-bottom: 19px;
+}
+.detail-block .faq-list .accordion-line {
+  top: 31px;
+  height: 11px;
+}

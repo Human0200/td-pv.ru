@@ -1,0 +1,118 @@
+.burger-menu {
+  max-width: 1000px;
+  width: 100%;
+  margin: 0 auto;
+  padding-left: 40px;
+}
+.burger-menu__link--large {
+  font-size: 24px;
+  line-height: 40px;
+}
+
+.burger-menu__item--large {
+  padding: 5px 0;
+  width: 50%;
+  display: flex;
+  align-items: center;
+}
+.burger-menu__link--large {
+  display: inline-block;
+}
+.burger-menu__item--first {
+  padding-top: 0;
+}
+.burger-menu__item--last {
+  padding-bottom: 0;
+}
+
+.burger-menu__dropdown--right {
+  opacity: 0;
+  visibility: hidden;
+  position: absolute;
+  left: 50%;
+  top: 18.5px;
+  width: 50%;
+  max-height: 100%;
+  margin: -17px 0;
+  transition: opacity 0.2s ease-in-out, visibility 0.2s ease-in-out;
+  padding-right: 20px;
+}
+.burger-menu__item--current .burger-menu__dropdown--right {
+  visibility: visible;
+  opacity: 1;
+}
+.burger-menu__dropdown-item--middle {
+  padding: 8.5px 20px 8.5px 0;
+  margin-bottom: 0;
+}
+.burger-menu__link-wrapper {
+  display: flex; /*justify-content: space-between;*/
+}
+.burger-menu__link-wrapper i.svg {
+  flex-shrink: 0;
+}
+.burger-menu__link-wrapper .burger-menu__link--middle {
+  margin-right: 13px;
+}
+.burger-menu__dropdown-right-arrow {
+  cursor: pointer;
+  transform: rotate(90deg);
+  transition: transform 0.2s ease-in-out;
+  height: 19px;
+  width: 19px;
+  display: flex !important;
+  align-items: center;
+  justify-content: center;
+  border-radius: 50%;
+  margin-top: 3px;
+}
+.burger-menu__dropdown-right-arrow.opened {
+  transform: rotate(270deg);
+}
+.burger-menu--dark .burger-menu__dropdown-right-arrow * {
+  fill: #fff;
+}
+.burger-menu__dropdown-right-arrow:hover * {
+  fill: #fff;
+  /* fill: var(--black_bg_black); */
+}
+
+.burger-menu__dropdown--bottom {
+  display: none;
+  padding: 12px 0 5px 0;
+}
+.burger-menu__dropdown-item--small {
+  margin: 6px 0;
+  padding-left: 9px;
+}
+
+.burger-menu__item-delimiter {
+  display: none;
+  height: 1px;
+  background: #e5e5e5;
+  flex: 1;
+  margin-top: 2px;
+  margin-left: 27px;
+  margin-right: 32px;
+}
+.burger-menu--dark .burger-menu__item-delimiter {
+  opacity: 0.2;
+  background: #fff;
+}
+.burger-menu__item--current.burger-menu__item--dropdown .burger-menu__item-delimiter {
+  display: block;
+}
+
+.burger-menu--dark .burger-menu__link--light {
+  color: #fff;
+}
+.burger-menu--dark .burger-menu__link--light:hover {
+  color: #a5a5a5;
+}
+
+@media (max-width: 1200px) {
+  .burger-menu__link--large {
+    font-size: 20px;
+    line-height: 32px;
+  }
+}

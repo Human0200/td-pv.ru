@@ -1,0 +1,1 @@
+.content-row-hidden-hover .content-row-hidden{display:grid;grid-template-rows:0fr;transition:grid-template-rows .3s ease}.content-row-hidden-hover:hover .content-row-hidden{grid-template-rows:1fr;}

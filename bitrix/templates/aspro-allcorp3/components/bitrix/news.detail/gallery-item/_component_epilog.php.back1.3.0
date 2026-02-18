@@ -1,0 +1,13 @@
+<?
+if (!defined('B_PROLOG_INCLUDED') || B_PROLOG_INCLUDED !== true) {
+    exit;
+}
+
+$arExtensions = [];
+if ($templateData['ITEMS']) {
+    $arExtensions[] = 'owl_gallery';
+}
+
+if ($arExtensions) {
+    TSolution\Extensions::init($arExtensions);
+}

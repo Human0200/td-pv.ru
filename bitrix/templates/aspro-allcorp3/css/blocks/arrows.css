@@ -1,0 +1,92 @@
+.arrow-all {
+  position: absolute;
+  right: -1px;
+  top: 7px;
+  z-index: 1;
+  width: 34px;
+  height: 8px;
+}
+.arrow-all__item-arrow {
+  position: absolute;
+  right: 0px;
+  top: 0px;
+}
+.arrow-all__item-line {
+  background: #cacaca;
+  height: 2px;
+  position: absolute;
+  right: 1px;
+  top: 3px;
+  left: calc(100% - 18px);
+  transition: left ease 0.5s;
+}
+.animate-arrow-hover:hover .arrow-all__item-line {
+  left: calc(100% - 34px);
+}
+.arrow-all--wide {
+  width: 42px;
+  height: 12px;
+}
+.arrow-all--wide .arrow-all__item-line {
+  top: 5px;
+  left: calc(100% - 25px);
+}
+.arrow-all--wide.arrow-all--sm .arrow-all__item-line {
+  top: 3px;
+}
+.animate-arrow-hover:hover .arrow-all--wide .arrow-all__item-line {
+  left: calc(100% - 42px);
+}
+.arrow-all--light-color {
+  color: #fff;
+}
+.arrow-all--light-bgcolor {
+  background-color: #fff;
+}
+.arrow-all--light-path * {
+  fill: #fff;
+}
+.arrow-all--light-stroke * {
+  stroke: #fff;
+}
+.arrow-all--dark-bgcolor {
+  background-color: #919191;
+}
+.arrow-all--dark-path * {
+  fill: #919191;
+}
+.arrow-all--dark-stroke * {
+  stroke: #919191;
+}
+.arrow-all--animate-right {
+  transition: right 0.5s ease;
+  right: 45px;
+}
+
+.animate-arrow-hover:hover .arrow-all--animate-right {
+  right: calc(45px - 17px);
+}
+
+.arrow-all--reverce .svg {
+  left: 0px;
+  right: auto;
+}
+.arrow-all--reverce .svg svg {
+  transform: rotate(180deg);
+}
+.arrow-all--reverce .arrow-all__item-line {
+  left: 0;
+  right: calc(100% - 18px);
+  transition: right ease 0.5s;
+}
+.animate-arrow-hover:hover .arrow-all--reverce .arrow-all__item-line {
+  right: calc(100% - 34px);
+  left: 0;
+}
+
+.arrow-all--reverce.arrow-all--wide .arrow-all__item-line {
+  right: calc(100% - 25px);
+}
+.animate-arrow-hover:hover .arrow-all--reverce.arrow-all--wide .arrow-all__item-line {
+  right: calc(100% - 42px);
+}

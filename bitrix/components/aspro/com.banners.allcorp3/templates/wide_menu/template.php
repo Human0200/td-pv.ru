@@ -1,0 +1,98 @@
+<?
+if (!defined('B_PROLOG_INCLUDED') || B_PROLOG_INCLUDED !== true) die();
+$this->setFrameMode(true);
+
+if (empty($arResult['ITEMS']['HEADER_WIDE_MENU']['ITEMS'])) return;
+
+$templateData['ITEMS'] = true;
+
+$countSlides = count($arResult['ITEMS']['HEADER_WIDE_MENU']['ITEMS']);
+$arOptions = [
+    'preloadImages' => false,
+    'keyboard' => true,
+    'init' => false,
+    'countSlides' => $countSlides,
+    'rewind'=> true,
+    'watchSlidesProgress' => true,
+    'slidesPerView' => '1',
+    'spaceBetween' => '32',
+    'type' => 'banners_in_header',
+];
+?>
+<div class="side_banners">
+    <div class="slider-solution--init-by-condition swiper mobile-offset" data-plugin-options='<?=\Bitrix\Main\Web\Json::encode($arOptions);?>'>
+        <div class="swiper-wrapper">
+            <?foreach ($arResult['ITEMS']['HEADER_WIDE_MENU']['ITEMS'] as $arItem):?>
+                <?
+                $picture = $arItem['PREVIEW_PICTURE']['SRC'] ? $arItem['PREVIEW_PICTURE']['SRC'] : $arItem['DETAIL_PICTURE']['SRC'];
+                $date = $arItem['DISPLAY_ACTIVE_FROM'] ? $arItem['DISPLAY_ACTIVE_FROM'] : '';
+                $date = strtolower($date);
+                $link = $arItem['PROPERTIES']['LINKIMG']['VALUE'];
+                $pictureDescr = $arItem['PREVIEW_PICTURE']['DESCRIPTION'] ? $arItem['PREVIEW_PICTURE']['DESCRIPTION'] : $arItem['DETAIL_PICTURE']['DESCRIPTION'];
+                $pictureDescr = $pictureDescr ?? $arItem['NAME'];
+
+                $slideClassList = ['side_banners__item swiper-slide swiper-slide--height-auto'];
+                if ($link) {
+                    $slideClassList[] = 'dark_link';
+                }
+                $slideClass = TSolution\Utils::implodeClasses($slideClassList);
+                ?>
+                <?ob_start();?>
+                    <img src="<?=$picture;?>" class="side_banners__item-img rounded-4" alt="<?=$pictureDescr?>">
+
+                    <div class="side_banners__item-name font_15 switcher-title mt mt--18 line-clamp line-clamp--3">
+                        <?=$arItem['NAME'];?>
+                    </div>
+
+                    <?if ($date):?>
+                        <time datetime="<?=$arItem['ACTIVE_FROM_X'];?>" class="side_banners__item-date font_13 mt mt--12 color_999">
+                            <?=$date;?>
+                        </time>
+                    <?endif;?>
+                <?$slideContent = ob_get_clean();?>
+
+                <?if ($link):?>
+                    <?
+                    $attributesList = [];
+                    if (
+                        strpos($link, 'http') !== false
+                        && strpos($link, $_SERVER['HTTP_HOST']) === false
+                    ) {
+                        $attributesList[] = 'target="_blank" rel="nofollow"';
+                    }
+                    $attributes = $attributesList ? ' '.implode(' ', $attributesList) : '';
+                    ?>
+                    <a href="<?=$link;?>" class="<?=$slideClass;?>"<?=$attributes;?>>
+                        <?=$slideContent;?>
+                    </a>
+                <?else:?>
+                    <div class="<?=$slideClass;?>">
+                        <?=$slideContent;?>
+                    </div>
+                <?endif;?>
+            <?endforeach;?>
+        </div>
+    </div>
+
+    <?if ($arOptions['countSlides'] > 1):?>
+        <div class="navigation-pagination mt mt--20">
+            <div class="line-block line-block--gap line-block--gap-12">
+                <?TSolution\Functions::showBlockHtml([
+                    'FILE' => 'ui/slider-pagination.php',
+                    'PARAMS' => [
+                        'CLASSES' => 'swiper-pagination--small static flex-1',
+                    ],
+                ]);?>
+
+                <?TSolution\Functions::showBlockHtml([
+                    'FILE' => 'ui/slider-navigation.php',
+                    'PARAMS' => [
+                        'SVG_CLASSES' => 'stroke-use-svg-999',
+                        'CLASSES' => 'static slider-nav--top slide-nav--small slider-nav--hover-theme-svg slider-nav--transparent-bg',
+                        'WRAPPER_CLASS' => 'navigation line-block line-block--gap',
+                    ],
+                ]);?>
+            </div>
+        </div>
+    <?endif;?>
+</div>

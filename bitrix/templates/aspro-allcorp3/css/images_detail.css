@@ -1,0 +1,19 @@
+.catalog-detail__gallery {
+    --sizeImage:520px;
+    --bottomGallery: 74px;
+}
+.catalog-detail__gallery--322px {
+    --sizeImage:322px;
+}
+.catalog-detail__gallery--388px {
+    --sizeImage:388px;
+}
+.catalog-detail__gallery--454px {
+    --sizeImage:454px;
+}
+.ratio--horizontal {
+    --ratio:2/3;
+}
+.ratio--vertical {
+    --ratio:3/2;
+}

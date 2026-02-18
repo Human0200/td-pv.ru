@@ -1,0 +1,36 @@
+.price {
+  font-weight: 600;
+  line-height: 20px;
+  font-size: 1em;
+}
+/*.price .price__new-val {
+  line-height: 22px;
+}*/
+.price__old {
+  display: inline-block;
+  vertical-align: top;
+  font-weight: normal;
+}
+.price__old-val {
+  text-decoration: line-through;
+}
+.price__economy {
+  display: inline-block;
+  vertical-align: top;
+  background: #ffd600;
+  border: 1px solid #f2cb00;
+  line-height: 0px;
+  margin: 1px 0 0 0px;
+}
+.price .price__economy-val {
+  color: #333;
+  vertical-align: middle;
+  line-height: 9px;
+  display: inline-block;
+  padding: 4px 4px 3px 3px;
+}
+
+.price--inline > div {
+  display: inline-block;
+  vertical-align: baseline;
+}

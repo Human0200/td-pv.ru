@@ -1,0 +1,21 @@
+<?
+$MESS['EA_T_FONT_SIZE_TITLE'] = 'Размер шрифта';
+$MESS['EA_T_FONT_SIZE_SMALL'] = 'Уменьшенный размер шрифта';
+$MESS['EA_T_FONT_SIZE_NORMAL'] = 'Нормальный размер шрифта';
+$MESS['EA_T_FONT_SIZE_BIG'] = 'Увеличенный размер шрифта';
+$MESS['EA_T_COLOR_SCHEME_TITLE'] = 'Цвет фона и шрифта';
+$MESS['EA_T_COLOR_SCHEME_BLACK'] = 'Черным по белому фону';
+$MESS['EA_T_COLOR_SCHEME_WHITE'] = 'Белым по черному фону';
+$MESS['EA_T_COLOR_SCHEME_BLUE'] = 'Синим по голубому фону';
+$MESS['EA_T_COLOR_SCHEME_BLACK_ON_YELLOW'] = 'Черным по желтому фону';
+$MESS['EA_T_COLOR_SCHEME_GREEN'] = 'Зеленым по черному фону';
+$MESS['EA_T_IMAGES_TITLE'] = 'Изображения';;
+$MESS['EA_T_IMAGES_ON'] = 'Отображать изображения';
+$MESS['EA_T_IMAGES_OFF'] = 'Скрывать изображения';
+$MESS['EA_T_SPEAKER_TITLE'] = 'Озвучивание текста';
+$MESS['EA_T_SPEAKER_ON'] = 'Озвучивать текст';
+$MESS['EA_T_SPEAKER_OFF'] = 'Не озвучивать текст';
+$MESS['EA_T_NORMAL_VERSION'] = 'Обычная версия сайта';
+$MESS['EA_T_NORMAL_VERSION_SHORT'] = 'Обычная версия';
+$MESS['EA_T_EYED_VERSION'] = 'Версия для слабовидящих';
+$MESS['__EA_T_TEXT_REGEX'] = '[0-9a-zа-я]';

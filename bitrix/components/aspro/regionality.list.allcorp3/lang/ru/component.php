@@ -1,0 +1,1 @@
+<?$MESS['ASPRO_MODULE_NOT_INSTALLED'] = 'Модуль Аспро не установлен.';

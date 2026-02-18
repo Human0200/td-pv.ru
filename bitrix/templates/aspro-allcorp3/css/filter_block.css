@@ -1,0 +1,16 @@
+.blocks_filter {
+    padding: 0px 35px;
+    margin-bottom: 48px;
+    cursor: default;
+  }
+  .head-block__item-title {
+    display: block;
+    position: relative;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    padding: 19px 0px;
+  }
+.dropdown-select.cursor_default {
+  cursor: auto;
+}

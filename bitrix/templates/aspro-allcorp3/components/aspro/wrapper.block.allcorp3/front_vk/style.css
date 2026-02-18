@@ -1,0 +1,35 @@
+.vk-list__item-period-date {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+}
+.vk-list__item-period-date::before {
+  background-image: url('../../../../images/svg/social/social_mainpage.svg');
+  background-repeat: no-repeat;
+  border-radius: 4px;
+  content: "";
+  display: block;
+  display: inline-block;
+  height: 16px;
+  margin-right: 12px;
+  width: 16px;
+}
+.vk-list__item-text-wrapper  {
+  margin-bottom: 16px;
+}
+.vk-list__item-text-post {
+  margin-top: 9px;
+}
+.vk-list__item-image-wrapper .image {
+  padding: 57% 0 0 0;
+  position: relative;
+  display: block;
+}
+.vk-list__item-period-icon {
+  display: flex;
+  flex: 1;
+  justify-content: flex-end;
+}
+.vk-list__item-link {
+  padding: 24px 20px;
+}

@@ -1,0 +1,111 @@
+.staff-list.staff-list--view1 .staff-list__item-text-wrapper {
+  opacity: 0;
+  visibility: hidden;
+  position: absolute;
+  bottom: 0;
+  border-radius: 4px 4px 2px 2px;
+  padding: 0px 3px 0px clamp(12px, 2vw, 32px);
+  padding: 0px 3px 0px clamp(12px, 10cqw, 32px);
+  max-height: 100%;
+  transition: opacity 0.2s ease-in-out, visibility 0.2s ease-in-out, box-shadow 0.2s ease-in-out;
+  width: 100%;
+  z-index: 2;
+}
+.staff-list.staff-list--view1 .staff-list__item-company {
+  color: #fff;
+  opacity: 0.5;
+}
+.staff-list.staff-list--view1 .staff-list__item-title {
+  color: #fff;
+}
+.staff-list.staff-list--view1 .staff-list__item-preview-wrapper {
+  display: none;
+}
+.staff-list.staff-list--view1 .staff-list__item-prop-title {
+  color: #fff;
+  opacity: 0.5;
+}
+.staff-list.staff-list--view1 .staff-list__item-phone {
+  color: #fff;
+}
+.staff-list.staff-list--view1 .staff-list__item-email {
+  color: #fff;
+}
+.staff-list.staff-list--view1 .staff-list__item-title:hover,
+.staff-list.staff-list--view1 .staff-list__item-phone:hover,
+.staff-list.staff-list--view1 .staff-list__item-email:hover {
+  color: #fff;
+  opacity: 0.7;
+}
+.staff-list.staff-list--view1 .staff-list__item::before {
+  content: "";
+  position: absolute;
+  bottom: 0;
+  top: 0;
+  left: 0;
+  right: 0;
+  background: #000;
+  opacity: 0;
+  z-index: 1;
+  transition: opacity 0.2s ease-in-out;
+}
+.staff-list.staff-list--view1 .staff-list__item:hover::before {
+  opacity: 0.35;
+}
+.staff-list.staff-list--view1 .staff-list__item:hover .staff-list__item-additional-text-wrapper {
+  opacity: 0;
+}
+.staff-list.staff-list--view1 .staff-list__item:hover .staff-list__item-text-wrapper {
+  opacity: 1;
+  visibility: visible;
+}
+.staff-list.staff-list--view1 .staff-list__item-text-wrapper .mCSB_container {
+  padding: 26px 10px 32px 0px;
+}
+.staff-list.staff-list--view1 .staff-list__item.staff-list__item--no-radius .staff-list__item-text-wrapper {
+  border-bottom-right-radius: 0;
+  border-bottom-left-radius: 0;
+}
+.staff-list.staff-list--view1 .staff-list__item.staff-list__item--no-radius .staff-list__item-image-wrapper {
+  border-radius: 0;
+}
+.staff-list.staff-list--view1 .staff-list__item-additional-text-wrapper {
+  position: absolute;
+  bottom: 25px;
+  left: 31px;
+  right: 31px;
+}
+.staff-list.staff-list--view1 .staff-list__item-image {
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background-size: cover;
+  background-position: center;
+  background-repeat: no-repeat;
+}
+.staff-list.staff-list--view1 .staff-list__item-image-wrapper {
+  padding-top: 128%;
+  border-radius: 4px;
+  overflow: hidden;
+  width: 100%;
+}
+.staff-list.staff-list--view1 .staff-list__item-image-wrapper::after {
+  content: "";
+  position: absolute;
+  left: 0%;
+  right: 0%;
+  top: 51%;
+  bottom: 0%;
+  background: linear-gradient(180deg, rgba(0, 0, 0, 0) 0%, rgba(0, 0, 0, 0.5) 100%);
+}
+.staff-list.staff-list--view1 .staff-list__item-link {
+  z-index: 1;
+}
+
+@media (max-width: 767px) {
+  .staff-list.staff-list--view1 .staff-list__item:hover .staff-list__item-image-wrapper::after {
+    opacity: 1;
+  }
+}

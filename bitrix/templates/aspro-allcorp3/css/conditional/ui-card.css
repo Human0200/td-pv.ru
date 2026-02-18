@@ -1,0 +1,111 @@
+.ui-card {
+	position: relative;
+	overflow: hidden;
+}
+.ui-card__image {
+	--aspect-ratio: 3 / 2;
+	overflow: hidden;
+	position: relative;
+	aspect-ratio: var(--aspect-ratio);
+}
+.ui-card__image--min-height-300 {
+	min-height: 300px;
+}
+
+.ui-card:has(.ui-card__image--masonry-low,
+	.ui-card__image--masonry-low-span-2,
+	.ui-card__image--masonry-low-span-3,
+	.ui-card__image--masonry-low-span-4) {
+	min-height: 250px;
+}
+
+@media (any-hover: hover) {
+	a.ui-card:hover .ui-card__img {
+		scale: 1.1;
+	}
+
+	.ui-card:hover a.chip--white-blur:not(:hover),
+	.ui-card:hover button.chip--white-blur:not(:hover) {
+		background-color: var(--theme-base-color);
+		border-color: var(--theme-base-color);
+		color: #fff;
+	}
+
+	.ui-card--image-scale:hover .ui-card__img {
+		scale: 1.1;
+	}
+}
+
+.ui-card__link {
+	position: absolute;
+	inset: 0;
+	z-index: 1;
+}
+
+.ui-card__img {
+	position: absolute;
+	top: 0;
+	left: 0;
+	width: 100%;
+	height: 100%;
+	object-fit: cover;
+	will-change: scale;
+	transition: scale 0.6s ease;
+}
+
+.ui-card__img.lazyloaded {
+	transition: scale 0.6s ease, opacity 0.3s ease;
+}
+
+.ui-card__info--adaptive-flex {
+	display: flex;
+	justify-content: space-between;
+	align-items: end;
+}
+
+@media (max-width: 600px) {
+	.ui-card__info--adaptive-flex {
+		flex-direction: column;
+		align-items: start;
+	}
+
+	.ui-card__image--ratio-1-927 {
+		--aspect-ratio: 1;
+	}
+
+	.ui-card__image--ratio-1-235 {
+		--aspect-ratio: 0.84;
+	}
+}
+
+.ui-card__info--absolute {
+	--offset: 24px;
+	position: absolute;
+	bottom: var(--offset);
+	left: var(--offset);
+	right: var(--offset);
+}
+
+.ui-card__info--absolute-off-20 {
+	--offset: clamp(16px, 4vw, 20px);
+}
+
+.ui-card__info--absolute-off-32 {
+	--offset: clamp(24px, 4vw, 32px);
+}
+
+.ui-card__info--absolute-off-40 {
+	--offset: clamp(24px, 4vw, 40px);
+}
+
+.ui-card__info--absolute-center {
+	top: 50%;
+	left: 50%;
+	translate: -50% -50%;
+	height: fit-content;
+}
+
+.ui-card__info--full-height {
+	height: calc(100% - calc(var(--offset) * 2));
+	top: var(--offset);
+}

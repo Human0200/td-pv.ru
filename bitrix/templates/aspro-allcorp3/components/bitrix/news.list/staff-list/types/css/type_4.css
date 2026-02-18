@@ -1,0 +1,76 @@
+.staff-list.staff-list--view4 .staff-list__item-text-wrapper {
+  position: absolute;
+  padding: 32px;
+  padding-right: 10px;
+  padding-bottom: 72px;
+  bottom: 0;
+  width: 100%;
+  opacity: 0;
+  background: #fff;
+  background: var(--card_bg_black);
+  transform: translateY(40px);
+  transition: transform 0.3s ease-in-out;
+  box-shadow: 0px 2px 20px rgba(0, 0, 0, 0.1);
+  border-radius: 4px;
+}
+.staff-list.staff-list--view4 .staff-list__item:hover .staff-list__item-text-wrapper {
+  opacity: 1;
+  transform: translateY(0px);
+  padding-bottom: 32px;
+}
+.staff-list.staff-list--view4 .staff-list__item-props {
+  display: flex;
+  flex-wrap: wrap;
+  margin-left: -10px;
+  margin-right: -10px;
+  margin-top: -14px;
+}
+.staff-list.staff-list--view4 .staff-list__item-prop {
+  margin: 14px;
+}
+.staff-list.staff-list--view4 .staff-list__item-additional-text-wrapper {
+  padding: 24px 32px;
+}
+.staff-list.staff-list--view4 .staff-list__item-image-wrapper {
+  padding-top: 66%;
+  border-radius: 4px;
+  overflow: hidden;
+}
+.staff-list.staff-list--view4 .staff-list__item.staff-list__item--no-radius .staff-list__item-image-wrapper {
+  border-radius: 0;
+}
+
+@media (max-width: 968px) {
+  .staff-list.staff-list--view4 .staff-list__item-text-wrapper {
+    top: 0;
+    padding: 20px;
+    padding-right: 3px;
+    visibility: hidden;
+    border-radius: 0;
+  }
+  .staff-list.staff-list--view4 .staff-list.staff-list--view4 .staff-list__item-text-wrapper .mCSB_container {
+    padding-left: 32px;
+    padding-top: 32px;
+    padding-bottom: 32px;
+    padding-right: 3px;
+  }
+  .staff-list.staff-list--view4 .staff-list__item:hover .staff-list__item-text-wrapper {
+    top: 0;
+    bottom: 20px;
+    padding-bottom: 0;
+    visibility: visible;
+  }
+  .staff-list.staff-list--view4 .staff-list__item-props {
+    margin-top: 0;
+  }
+  .staff-list.staff-list--view4 .staff-list__item-prop {
+    margin: 0px 14px 8px;
+  }
+}
+@media (min-width: 768px) {
+  .staff-list.staff-list--view4 .staff-list__item:not(:hover) .staff-list__item-preview-wrapper,
+  .staff-list.staff-list--view4 .staff-list__item:not(:hover) .staff-list__info-wrapper,
+  .staff-list.staff-list--view4 .staff-list__item:not(:hover) .staff-list__item-text-bottom-part {
+    display: none;
+  }
+}

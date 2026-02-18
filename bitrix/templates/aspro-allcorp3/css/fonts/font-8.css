@@ -1,0 +1,35 @@
+/* 16px/27px Roboto (Default) */
+html {
+  --theme-font-size: 16px;
+  --theme-line-height: 27px;
+  --theme-font-family: "Roboto", Arial, sans-serif;
+}
+html {
+  font-size: 16px;
+  font-size: var(--theme-font-size);
+}
+body,
+body div.bx-yandex-map,
+body .ymaps-map .ymaps-b-balloon,
+.fancybox-title,
+.gm-style,
+.gm-style-iw-d {
+  font: 16px/27px "Roboto", Arial, sans-serif;
+  font: var(--theme-font-size)/var(--theme-line-height) var(--theme-font-family);
+}
+h1,
+h2,
+h3,
+h4,
+h5,
+h6,
+.h1,
+.h2,
+.h3,
+.h4,
+.h5,
+.h6,
+.popup-window {
+  font-family: "Roboto", Arial, sans-serif;
+  font-family: var(--theme-font-family);
+}

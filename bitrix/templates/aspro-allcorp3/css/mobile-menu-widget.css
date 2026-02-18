@@ -1,0 +1,28 @@
+.mobilemenu__menu-item>.link-wrapper *:where(a:not(.flexbox), .link-wrapper__span) {
+	padding: 10px 40px 10px 40px;
+	display: block;
+	position: relative;
+	word-break: break-word;
+}
+
+.mobilemenu__menu-dropdown .mobilemenu__menu-item>.link-wrapper *:where(a:not(.flexbox), .link-wrapper__span) {
+	padding: 10px 40px 10px 40px;
+}
+
+/* item icon */
+.mobilemenu__menu-item--with-icon>.link-wrapper *:where(a, .link-wrapper__span) {
+	padding-left: 77px !important;
+	font-size: 1em;
+	line-height: calc(1em + 7px);
+}
+
+/* widget */
+.mobilemenu__menu--widget .mobilemenu__menu-item-svg {
+	top: 8px;
+	left: 42px;
+}
+
+.mobilemenu__menu--widget .widget-img {
+	max-width: 20px;
+	max-height: 22px;
+}

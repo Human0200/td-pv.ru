@@ -1,0 +1,179 @@
+/*main*/
+.banners-fon-list__item {
+  position: relative;
+  overflow: hidden;
+  background-size: cover;
+  background-color: #f1f1f1;
+  background-color: var(--light, #f1f1f1) var(--dark, var(--card_bg_hover_black));
+  background-position: center;
+}
+
+/*image*/
+.banners-fon-list__image-inner {
+  text-align: left;
+}
+.banners-img-with-text-list__item-link {
+  display: block;
+  overflow: hidden;
+}
+.banners-fon-list__item-image--static {
+  max-height: 100%;
+  max-height: 491px;
+  transform: translateX(-50%);
+  position: relative;
+  left: 50%;
+}
+
+/*text*/
+.banners-fon-list__item-text {
+  padding: 53px 0px;
+}
+.banners-fon-list__item-inner {
+  padding: 0px 40px 0px 40px;
+}
+.banners-fon-list__item-top-text {
+  margin-bottom: 9px;
+}
+.banners-fon-list__item-description {
+  margin-top: 24px;
+}
+.banners-fon-list__item-description p:last-of-type {
+  margin-bottom: 0px;
+}
+/*btn*/
+.banners-fon-list__item-btn {
+  margin-top: 33px;
+  position: relative;
+  z-index: 2;
+  display: inline-block;
+  align-self: baseline;
+}
+.banners-fon-list__item-btn-action {
+  width: 70px;
+  height: 40px;
+  display: block;
+}
+.arrow-all.banners-arrow-action {
+  top: 13px;
+  right: 45px;
+}
+
+@media (min-width: 992px) {
+  .banners-fon-list__item--min-height {
+    min-height: 400px;
+  }
+  .banners-fon-list__item-text {
+    flex: 1;
+  }
+
+  .banners-fon-list__item--BIG_BANNER .banners-fon-list__item {
+    max-height: 650px;
+  }
+  .banners-fon-list__item--BIG_BANNER .banners-fon-list__item-text {
+    align-self: center;
+  }
+  .banners-fon-list__item--BIG_BANNER .banners-fon-list__item-inner {
+    padding: 0px 40px 0px 120px;
+  }
+  .banners-fon-list__item--BIG_BANNER .banners-fon-list__image-wrapper {
+    min-height: 640px;
+  }
+
+  .banners-fon-list__item--BOTTOM_IMG .banners-fon-list__item-text {
+    flex-basis: auto;
+  }
+
+  .banners-fon-list__item--SM_BANNER .banners-fon-list__item-text {
+    padding-bottom: 40px;
+  }
+  .banners-fon-list__item--SM_BANNER .banners-fon-list__item-inner {
+    padding: 0px 0px 0px 53px;
+  }
+  .banners-fon-list__item--SM_BANNER .banners-fon-list__item-description {
+    margin-top: 11px;
+  }
+  .banners-fon-list__item--SM_BANNER .banners-fon-list__item-image {
+    max-height: 326px;
+    max-height: 100%;
+  }
+  .banners-fon-list__item--SM_BANNER.banners-fon-list__item--min-height,
+  .banners-fon-list__item--SM_BANNER .banners-fon-list__item--min-height {
+    min-height: 360px;
+  }
+  .banners-fon-list__item-inner--FLEX {
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    /* align-items: flex-start; */
+    height: 100%;
+  }
+
+  .banners-fon-list__item-image--absolute {
+    position: absolute;
+    bottom: 0px;
+    left: 0px;
+  }
+  .flexbox--direction-row .banners-fon-list__image-wrapper {
+    flex: 1;
+  }
+  .banners-fon-list__image-wrapper {
+    position: relative;
+  }
+  .banners-fon-list__item--SM_BANNER .banners-fon-list__image-wrapper {
+    padding-top: 46px;
+  }
+  .banners-fon-list__image-inner {
+    position: relative;
+    height: 100%;
+  }
+
+  /*wide*/
+  .banners-fon-list__item--BIG_BANNER.banners-fon-list__item--wide .banners-fon-list__item-inner {
+    padding-left: 32px;
+    margin-left: auto;
+  }
+  body.left_header_column
+    .banners-fon-list__item--BIG_BANNER.banners-fon-list__item--wide
+    .banners-fon-list__item-inner {
+    padding-left: 120px;
+  }
+}
+@media (max-width: 991px) {
+  .banners-fon-list__item-image {
+    /* max-width: 100%; */
+    max-height: 100%;
+    max-height: 300px;
+  }
+  .banners-fon-list__item--min-height.flexbox {
+    justify-content: space-between;
+  }
+  .banners-fon-list__item .banners-fon-list__image--fit_image {
+    max-width: 1px;
+  }
+}
+@media (max-width: 600px) {
+  .banners-fon-list__item {
+    height: 100%;
+  }
+  .banners-fon-list__item-text {
+    padding: 25px 0px 8px;
+  }
+  .banners-fon-list__item-inner {
+    padding: 0px 30px;
+  }
+  body .banners-fon-list__item-title {
+    font-size: 18px;
+  }
+  .banners-fon-list__item-top-text {
+    margin-bottom: 6px;
+  }
+  .banners-fon-list__item-description {
+    display: none;
+  }
+  .banners-fon-list__item-btn {
+    margin-top: 15px;
+  }
+  .banners-fon-list__item-btn .btn {
+    padding: 8px 20px 10px;
+  }
+}

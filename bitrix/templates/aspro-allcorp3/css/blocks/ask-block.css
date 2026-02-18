@@ -1,0 +1,16 @@
+.ask-block {
+    margin-bottom: 20px;
+}
+.ask-block__container {
+    text-align: center;
+    padding: 39px 17px 39px;
+}
+.ask-block__text {
+    padding: 21px 0 0 0;
+}
+.ask-block__text p {
+    margin-bottom: 9px;
+}
+.ask-block__button {
+    padding: 10px 0 0 0;
+}

@@ -1,0 +1,123 @@
+.gallery,
+.big_gallery {
+  position: relative;
+}
+.gallery img,
+.big_gallery img {
+  cursor: zoom-in;
+  min-width: 1px;
+  border-radius: 4px;
+}
+
+/* view swith */
+.gallery-view_switch {
+  position: absolute;
+  right: 0px;
+  top: 0px;
+  display: block;
+  background: #fff;
+  background: var(--black_bg_black);
+}
+.gallery-view_switch__count-wrapper {
+  display: flex;
+  flex-direction: row;
+}
+.gallery-view_switch__count-value {
+  padding-right: 3px;
+  padding-left: 3px;
+}
+.gallery-view_switch__count-separate {
+  color: #cecece;
+  padding: 0px 15px;
+}
+.gallery-view_switch__icons {
+  transition: opacity 0.3s ease;
+}
+.gallery-view_switch__icons path {
+  fill: var(--white_text_black);
+}
+.gallery-view_switch__icons.gallery-view_switch__icons--big {
+  margin-right: 6px;
+}
+.gallery-view_switch__icons:not(.active) {
+  opacity: 0.35;
+  cursor: pointer;
+}
+.gallery-view_switch .gallery-view_switch__icons:hover {
+  opacity: 1;
+}
+
+/* big */
+.gallery-big .owl-carousel {
+  max-height: 700px;
+  min-height: 150px;
+}
+.gallery-big .owl-carousel .owl-stage {
+  display: flex;
+  align-items: center;
+}
+.gallery-big .owl-stage-outer {
+  overflow: hidden;
+  border-radius: 4px;
+}
+.gallery-big .owl-carousel .owl-item {
+  flex-shrink: 0;
+}
+.gallery-big .owl-carousel .item img {
+  max-height: 650px;
+  width: auto;
+}
+.gallery-big__link {
+  display: inline-block;
+}
+
+.gallery-big .owl-carousel .owl-dots {
+  position: relative;
+  bottom: -8px;
+  right: initial;
+  top: initial;
+  text-align: center;
+}
+@media (min-width: 768px) {
+  .gallery-big .owl-carousel .owl-dots {
+    display: none;
+  }
+}
+
+/* small */
+.gallery-small .grid-list {
+  grid-template-columns: repeat(auto-fill, minmax(260px, 1fr));
+}
+@media (max-width: 620px) {
+  #main .gallery-small .grid-list:not(.mobile-scrolled) {
+    grid-template-columns: 1fr 1fr;
+  }
+}
+.gallery-small .item {
+  padding-top: 67%;
+  transition: opacity 0.3s ease;
+  overflow: hidden;
+  position: relative;
+}
+.gallery-small .item:hover {
+  opacity: 0.7;
+}
+.gallery-small .item > a {
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  right: 0;
+  left: 0;
+  display: flex;
+  align-items: center;
+  cursor: zoom-in;
+  text-align: center;
+}
+html.bx-ie .gallery-small .gallery-item-wrapper {
+  width: 25%;
+}
+@media (max-width: 991px) {
+  html.bx-ie .gallery-small .gallery-item-wrapper {
+    width: 50%;
+  }
+}

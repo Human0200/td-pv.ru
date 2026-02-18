@@ -1,0 +1,1 @@
+.accordion-grid-button--active + .accordion-grid-item{grid-template-rows:1fr;}.accordion-grid-item{display:grid;grid-template-rows:0fr;overflow:hidden;transition:grid-template-rows .4s ease;}.accordion-grid-item__wrapper{min-height:0;}

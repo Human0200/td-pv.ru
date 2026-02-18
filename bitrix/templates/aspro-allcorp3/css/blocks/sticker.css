@@ -1,0 +1,205 @@
+.sticker {
+  position: absolute;
+  z-index: 3;
+  top: 0px;
+  left: -2px;
+  display: flex;
+  flex-wrap: wrap;
+}
+.sticker__item {
+  padding: 2px 7px 3px;
+  margin: 0 2px 4px;
+  color: #fff;
+  background: #0cbc3d;
+  border-radius: 3px;
+}
+.sticker__item--bordered {
+  padding-top: 0px;
+  padding-bottom: 1px;
+  color: #666;
+  color: var(--light_basic_text_black);
+  border: 1px solid #e5e5e5;
+  border-color: var(--stroke_black);
+  background: #fafafa;
+  background: var(--light_bg_black);
+}
+.sticker--upper .sticker__item {
+  text-transform: uppercase;
+  letter-spacing: 1.2px;
+  padding: 4px 7px 3px 9px;
+  font-weight: 500;
+}
+
+.sticker_item--sale {
+  background-color: #ffd600;
+  color: #333;
+}
+.sticker_item--new {
+  background-color: #31b82f;
+}
+.sticker_item--hit {
+  background-color: #ed673c;
+}
+.sticker_item--recommend {
+  background-color: #925aec;
+}
+.sticker_item--sale-text {
+  background-color: #fc482d;
+}
+.block .side-icons + .sticker {
+  padding-right: 37px;
+}
+
+/*side_icons*/
+.side-icons:not(.static) {
+  position: absolute;
+  top: 0;
+  right: 0;
+  z-index: 5;
+}
+.side-icons-hover:hover .side-icons__item {
+  opacity: 1;
+  visibility: visible;
+}
+.side-icons__item {
+  display: block;
+  background: #fff;
+  background: var(--black_bg_black);
+  opacity: 0;
+  visibility: hidden;
+  transition: opacity 0.3s ease-in-out, visibility 0.3s ease-in-out;
+  margin: 0 0 4px;
+  overflow: hidden;
+  text-align: center;
+  cursor: pointer;
+}
+.side-icons__item .svg {
+  width: 32px;
+  height: 32px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+.side-icons__item svg {
+  display: inline-block;
+  vertical-align: middle;
+}
+.side-icons__item .svg span {
+  font-style: normal;
+}
+.side-icons__item:hover path,
+.side-icons__item:hover circle {
+  stroke: #fff;
+}
+.side-icons__item:hover .svg {
+  color: #fff;
+}
+/*.svg-inline-side-search {
+  padding-bottom: 2px;
+}*/
+
+.side-icons.static .side-icons__item {
+  opacity: 1;
+  visibility: visible;
+}
+.side-icons--line {
+  font-size: 0px;
+  line-height: 0px;
+  white-space: nowrap;
+}
+.side-icons--line .side-icons__item {
+  display: inline-block;
+  margin: 0px 0px 0px 12px;
+}
+.side-icons--lg .side-icons__item .svg {
+  width: 36px;
+  height: 36px;
+}
+
+.bx-touch .side-icons-hover .side-icons__item {
+  opacity: 1;
+  visibility: visible;
+}
+
+.side-icons__item.active {
+  background-color: #9e9e9e;
+  background-color: var(--theme-base-color);
+  border-color: #9e9e9e;
+  border-color: var(--theme-base-color);
+  opacity: 0.5;
+  visibility: visible;
+}
+.side-icons__item--fill svg {
+  fill: #999;
+}
+.side-icons__item--stroke svg {
+  stroke: #999;
+}
+.side-icons__item--fill:hover svg,
+.side-icons__item--fill.active svg {
+  fill: #fff;
+}
+.side-icons__item--stroke:hover svg,
+.side-icons__item--stroke.active svg {
+  stroke: #fff;
+}
+
+/*stock*/
+.status-icon {
+  padding: 0px 0 0 12px;
+  position: relative;
+  display: inline-block;
+  color: #69be15;
+  white-space: nowrap;
+}
+.status-icon:before {
+  content: "";
+  position: absolute;
+  background: #69be15;
+  border: 1px solid #5da911;
+  width: 6px;
+  height: 6px;
+  border-radius: 100%;
+  top: 8px;
+  left: 0px;
+}
+.status-icon.nostock {
+  color: #f91a35;
+}
+.status-icon.nostock:before {
+  background-color: #f91a35;
+  border-color: #d50b23;
+}
+.status-icon.order {
+  color: #25a4f1;
+}
+.status-icon.order:before {
+  background-color: #25a4f1;
+  border-color: #08c;
+}
+.status-icon.pending {
+  color: #fc9e41;
+}
+.status-icon.pending:before {
+  background-color: #fc9e41;
+  border-color: #d67a1f;
+}
+
+@media (max-width: 600px) {
+  .side-icons__item {
+    opacity: 1;
+    visibility: visible;
+  }
+}
+
+.discount-sticker {
+  background: #ffd600;
+  font-weight: bold;
+  display: inline-block;
+  padding: 4px 10px 3px 9px;
+  color: #333;
+  vertical-align: top;
+  height: 27px;
+  font-size: 12px;
+  line-height: 20px;
+}

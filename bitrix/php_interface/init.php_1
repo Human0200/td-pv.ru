@@ -1,0 +1,72 @@
+<?php
+if (!defined('B_PROLOG_INCLUDED') || B_PROLOG_INCLUDED !== true) {
+    die();
+}
+
+use Bitrix\Main\Loader;
+Loader::includeModule('iblock');
+
+class MainSectionSetter
+{
+    /**
+     * Универсальный метод для обработки OnBeforeAdd и OnBeforeUpdate
+     *
+     * @param array &$arFields — поля элемента, передаются по ссылке
+     */
+    public static function onBeforeSave(array &$arFields)
+    {
+        // ID инфоблока:
+        $myIblockId = 70;
+        if ((int)$arFields['IBLOCK_ID'] !== $myIblockId) {
+            return;
+        }
+
+        $rootSectionId = 0;
+
+        // 1) При обновлении ($arFields['ID'] уже есть) — берём через GetElementGroups
+        if (!empty($arFields['ID'])) {
+            $rs = \CIBlockElement::GetElementGroups(
+                $arFields['ID'],
+                true,
+                ['ID', 'DEPTH_LEVEL']
+            );
+            while ($sec = $rs->Fetch()) {
+                if ((int)$sec['DEPTH_LEVEL'] === 1) {
+                    $rootSectionId = (int)$sec['ID'];
+                    break;
+                }
+            }
+        }
+        // 2) При добавлении — смотрим в $arFields['IBLOCK_SECTION']
+        elseif (!empty($arFields['IBLOCK_SECTION']) && is_array($arFields['IBLOCK_SECTION'])) {
+            foreach ($arFields['IBLOCK_SECTION'] as $secId) {
+                $sec = \CIBlockSection::GetByID($secId)->Fetch();
+                if ($sec && (int)$sec['DEPTH_LEVEL'] === 1) {
+                    $rootSectionId = (int)$secId;
+                    break;
+                }
+            }
+        }
+
+        if ($rootSectionId) {
+            // Получаем CODE корневого раздела
+            $section = \CIBlockSection::GetByID($rootSectionId)->Fetch();
+            if ($section && $section['CODE']) {
+                // Записываем в свойство MAIN_SECTION_CODE
+                $arFields['PROPERTY_VALUES']['MAIN_SECTION_CODE'] = $section['CODE'];
+            }
+        }
+    }
+}
+
+// Регистрируем один и тот же метод на два события:
+\AddEventHandler(
+    'iblock',
+    'OnBeforeIBlockElementAdd',
+    ['MainSectionSetter', 'onBeforeSave']
+);
+\AddEventHandler(
+    'iblock',
+    'OnBeforeIBlockElementUpdate',
+    ['MainSectionSetter', 'onBeforeSave']
+);

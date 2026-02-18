@@ -1,0 +1,11 @@
+.rating {
+  display: flex;
+  margin: 0 -2px;
+  line-height: 0;
+}
+.rating__star {
+  margin: 0 2px;
+}
+.rating__star-svg--filled * {
+  fill: #e5c45b;
+}

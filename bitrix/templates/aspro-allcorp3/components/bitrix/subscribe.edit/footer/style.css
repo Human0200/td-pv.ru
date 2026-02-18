@@ -1,0 +1,15 @@
+.subscribe-form__bottom-block {
+  display: grid;
+  grid-template-rows: 0fr;
+  overflow: hidden;
+  transition: grid-template-rows 0.4s ease;
+}
+.subscribe-form__bottom-block-container {
+  min-height: 0px;
+}
+
+.subscribe-form:has(.subscribe-input:not(:placeholder-shown)) .subscribe-form__bottom-block,
+.subscribe-form:focus-within .subscribe-form__bottom-block,
+.subscribe-form:has(.form-checkbox__input:checked) .subscribe-form__bottom-block {
+  grid-template-rows: 1fr;
+}
