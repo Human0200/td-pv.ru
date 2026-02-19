@@ -52,7 +52,6 @@ foreach (($arResult['FAVORITS'] ?? []) as $fav) {
 $confirmUrl = !$isSameDomain ? ($arResult['REGIONS'][$arResult['REAL_REGION']['ID']]['URL'] ?? '') : '';
 ?>
 <style>
-/* ── Триггер ── */
 .rc-trigger {
     display: inline-flex;
     align-items: center;
@@ -71,8 +70,6 @@ $confirmUrl = !$isSameDomain ? ($arResult['REGIONS'][$arResult['REAL_REGION']['I
     line-height: 1.3;
 }
 .rc-trigger:hover .rc-trigger__name { opacity: .7; }
-
-/* ── Общий оверлей (для confirm и для выбора города) ── */
 .rc-overlay {
     position: fixed;
     inset: 0;
@@ -84,8 +81,6 @@ $confirmUrl = !$isSameDomain ? ($arResult['REGIONS'][$arResult['REAL_REGION']['I
     padding: 16px;
     box-sizing: border-box;
 }
-
-/* ── Confirm модалка ── */
 .rc-confirm {
     background: #fff;
     border-radius: 12px;
@@ -113,17 +108,28 @@ $confirmUrl = !$isSameDomain ? ($arResult['REGIONS'][$arResult['REAL_REGION']['I
     gap: 10px;
     justify-content: center;
 }
-.rc-confirm__close {
-    position: absolute; top: 10px; right: 14px;
-    background: none; border: none;
-    font-size: 22px; cursor: pointer; color: #bbb; line-height: 1;
+.rc-confirm__close-btn {
+    position: absolute;
+    top: 16px;
+    right: 16px;
+    background: none;
+    border: none;
+    font-size: 28px;
+    line-height: 1;
+    cursor: pointer;
+    color: #999;
+    padding: 0;
+    width: 28px;
+    height: 28px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    z-index: 10;
 }
-.rc-confirm__close:hover { color: #555; }
-
-/* ── Выбор города ── */
+.rc-confirm__close-btn:hover { color: #333; }
 .rc-modal {
     background: #fff;
-    border-radius: 12px;
+    border-radius: 16px;
     box-shadow: 0 16px 60px rgba(0,0,0,.25);
     width: 820px;
     max-width: 100%;
@@ -138,97 +144,157 @@ $confirmUrl = !$isSameDomain ? ($arResult['REGIONS'][$arResult['REAL_REGION']['I
     from { opacity: 0; transform: translateY(-10px); }
     to   { opacity: 1; transform: translateY(0); }
 }
-.rc-modal__close {
-    position: absolute; top: 12px; right: 14px;
-    background: none; border: none;
-    font-size: 26px; cursor: pointer; color: #ccc;
-    padding: 2px 6px; z-index: 1; line-height: 1;
+.rc-modal__close-btn {
+    position: absolute;
+    top: 20px;
+    right: 24px;
+    background: none;
+    border: none;
+    font-size: 32px;
+    line-height: 1;
+    cursor: pointer;
+    color: #999;
+    padding: 0;
+    width: 32px;
+    height: 32px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    z-index: 20;
 }
-.rc-modal__close:hover { color: #555; }
-.rc-modal__head { padding: 20px 24px 12px; flex-shrink: 0; }
-
-/* Поиск */
-.rc-search-wrap { position: relative; margin-bottom: 12px; }
+.rc-modal__close-btn:hover { color: #333; }
+.rc-modal__head { 
+    padding: 24px 56px 12px 24px; 
+    flex-shrink: 0; 
+    position: relative;
+}
+.rc-search-wrap { position: relative; margin-bottom: 16px; }
 .rc-search {
     display: flex; align-items: center;
-    border: 1.5px solid #e5e7eb; border-radius: 8px;
+    border: 1.5px solid #e5e7eb; border-radius: 12px;
     background: #fff; transition: border-color .15s;
 }
 .rc-search:focus-within { border-color: #2563eb; }
 .rc-search input {
     flex: 1; border: none; outline: none;
-    padding: 11px 12px; font-size: 15px;
+    padding: 14px 16px; font-size: 16px;
     font-family: inherit; background: transparent;
 }
-.rc-search svg { margin: 0 12px; color: #bbb; flex-shrink: 0; }
+.rc-search svg { margin: 0 8px 0 16px; color: #9ca3af; flex-shrink: 0; }
 .rc-drop {
     display: none;
     position: absolute;
     top: calc(100% + 4px); left: 0; right: 0;
     background: #fff; border: 1px solid #e5e7eb;
-    border-radius: 8px; box-shadow: 0 6px 20px rgba(0,0,0,.12);
-    z-index: 10; max-height: 220px; overflow-y: auto;
+    border-radius: 12px; box-shadow: 0 8px 24px rgba(0,0,0,.12);
+    z-index: 20; max-height: 260px; overflow-y: auto;
 }
 .rc-drop.is-open { display: block; }
-.rc-drop a { display: block; padding: 10px 14px; color: #333; text-decoration: none; font-size: 14px; }
+.rc-drop a { display: block; padding: 12px 16px; color: #333; text-decoration: none; font-size: 15px; }
 .rc-drop a:hover { background: #f5f5f5; }
-.rc-drop-none { padding: 10px 14px; color: #aaa; font-size: 14px; }
-
-/* Избранные */
-.rc-favs { display: flex; flex-wrap: wrap; gap: 6px; margin-top: 10px; }
+.rc-drop-none { padding: 12px 16px; color: #9ca3af; font-size: 15px; }
+.rc-favs { display: flex; flex-wrap: wrap; gap: 8px; margin-top: 12px; }
 .rc-favs a {
-    font-size: 13px; color: #2563eb; text-decoration: none;
-    padding: 4px 11px; border-radius: 20px;
-    border: 1px solid #bfdbfe; background: #eff6ff;
+    font-size: 14px; color: #2563eb; text-decoration: none;
+    padding: 6px 14px; border-radius: 30px;
+    border: 1px solid #bfdbfe; background: #eff6ff; transition: all .15s;
 }
-.rc-favs a:hover { background: #dbeafe; }
-
-/* Колонки */
+.rc-favs a:hover { background: #dbeafe; border-color: #2563eb; }
 .rc-modal__body {
     display: flex; flex: 1; overflow: hidden;
-    border-top: 1px solid #f0f0f0; margin-top: 8px;
+    border-top: 1px solid #f0f0f0;
 }
-.rc-col { flex: 1; overflow-y: auto; padding: 12px 16px; border-right: 1px solid #f0f0f0; }
+.rc-col { 
+    flex: 1; overflow-y: auto; padding: 16px 20px; 
+    border-right: 1px solid #f0f0f0; max-height: 380px;
+}
 .rc-col:last-child { border-right: none; }
 .rc-col__title {
-    font-size: 11px; font-weight: 700; color: #aaa;
-    text-transform: uppercase; letter-spacing: .07em;
-    margin-bottom: 6px; position: sticky; top: 0;
-    background: #fff; padding: 4px 0;
+    font-size: 12px; font-weight: 700; color: #9ca3af;
+    text-transform: uppercase; letter-spacing: .05em;
+    margin-bottom: 12px; position: sticky; top: 0;
+    background: #fff; padding: 8px 0 4px;
 }
-.rc-sec { padding: 7px 8px; font-size: 14px; color: #333; border-radius: 6px; cursor: pointer; }
-.rc-sec:hover, .rc-sec.is-active { background: #f3f4f6; color: #2563eb; }
-.rc-city { display: block; padding: 7px 8px; color: #333; text-decoration: none; font-size: 14px; border-radius: 6px; }
+.rc-sec { 
+    padding: 10px 12px; font-size: 15px; color: #333; 
+    border-radius: 8px; cursor: pointer; margin-bottom: 2px;
+}
+.rc-sec:hover, .rc-sec.is-active { background: #f3f4f6; color: #2563eb; font-weight: 500; }
+.rc-city { 
+    display: block; padding: 10px 12px; color: #333; 
+    text-decoration: none; font-size: 15px; border-radius: 8px;
+    margin-bottom: 2px; transition: background .15s;
+}
 .rc-city:hover { background: #f3f4f6; }
-.rc-city--cur { color: #2563eb; font-weight: 600; pointer-events: none; }
-
-/* Кнопки */
+.rc-city--cur { color: #2563eb; font-weight: 600; background: #eff6ff; pointer-events: none; }
 .rc-btn {
-    padding: 10px 24px; border-radius: 8px; font-size: 14px;
+    padding: 12px 28px; border-radius: 10px; font-size: 15px;
     cursor: pointer; border: none; font-family: inherit;
-    line-height: 1; font-weight: 500;
+    line-height: 1; font-weight: 500; transition: all .15s;
 }
 .rc-btn--yes { background: #2563eb; color: #fff; }
 .rc-btn--yes:hover { background: #1d4ed8; }
 .rc-btn--chg { background: #f3f4f6; color: #333; border: 1px solid #d1d5db; }
 .rc-btn--chg:hover { background: #e5e7eb; }
+.rc-col::-webkit-scrollbar { width: 4px; }
+.rc-col::-webkit-scrollbar-thumb { background: #d1d5db; border-radius: 4px; }
 
-.rc-col::-webkit-scrollbar { width: 3px; }
-.rc-col::-webkit-scrollbar-thumb { background: #e0e0e0; border-radius: 2px; }
+@media (max-width: 768px) {
+    .rc-modal__head { padding: 20px 48px 8px 20px; }
+    .rc-modal__close-btn { top: 16px; right: 20px; font-size: 30px; width: 30px; height: 30px; }
+    .rc-search input { padding: 12px 14px; font-size: 15px; }
+    .rc-favs a { font-size: 13px; padding: 5px 12px; }
+    .rc-col { padding: 12px 16px; max-height: 300px; }
+    .rc-col__title { font-size: 11px; margin-bottom: 8px; }
+    .rc-sec, .rc-city { padding: 8px 10px; font-size: 14px; }
+}
 
-@media (max-width: 600px) {
-    .rc-overlay { align-items: flex-end; padding: 0; }
-    .rc-modal { border-radius: 14px 14px 0 0; width: 100%; max-height: 90dvh; }
-    .rc-confirm { border-radius: 14px 14px 0 0; width: 100%; }
+@media (max-width: 640px) {
+    .rc-overlay { padding: 12px; }
+    .rc-modal { border-radius: 20px; max-height: calc(100vh - 40px); }
+    .rc-modal__head { padding: 18px 44px 8px 18px; }
+    .rc-modal__close-btn { top: 14px; right: 18px; }
     .rc-modal__body { flex-direction: column; }
-    .rc-col { border-right: none; border-bottom: 1px solid #f0f0f0; max-height: 160px; }
+    .rc-col { 
+        border-right: none; border-bottom: 1px solid #f0f0f0; 
+        max-height: 200px; padding: 12px 16px;
+    }
     .rc-col:last-child { border-bottom: none; }
+}
+
+@media (max-width: 480px) {
+    .rc-overlay { padding: 0; align-items: flex-end; }
+    .rc-modal { 
+        border-radius: 24px 24px 0 0; width: 100%; 
+        max-height: 85dvh; max-width: 100%;
+    }
+    .rc-modal__head { padding: 16px 40px 8px 16px; }
+    .rc-modal__close-btn { top: 12px; right: 16px; font-size: 28px; width: 28px; height: 28px; }
+    .rc-confirm { border-radius: 24px 24px 0 0; width: 100%; padding: 28px 20px 24px; }
+    .rc-confirm__close-btn { top: 16px; right: 16px; }
+    .rc-confirm__city { font-size: 20px; }
+    .rc-confirm__question { font-size: 14px; margin-bottom: 20px; }
+    .rc-search input { padding: 12px; font-size: 15px; }
+    .rc-favs { gap: 6px; margin-top: 10px; }
+    .rc-favs a { font-size: 12px; padding: 5px 10px; }
+    .rc-col { max-height: 180px; padding: 10px 14px; }
+    .rc-col__title { font-size: 10px; margin-bottom: 6px; }
+    .rc-sec, .rc-city { padding: 8px 10px; font-size: 14px; }
+    .rc-btn { padding: 10px 20px; font-size: 14px; }
+}
+
+@media (max-width: 360px) {
+    .rc-modal__head { padding: 14px 36px 8px 14px; }
+    .rc-modal__close-btn { top: 10px; right: 14px; }
+    .rc-confirm { padding: 24px 16px 20px; }
+    .rc-confirm__btns { flex-direction: column; gap: 8px; }
+    .rc-btn { width: 100%; }
+    .rc-col { max-height: 160px; }
 }
 </style>
 
-<!-- Кнопка-триггер -->
 <button class="rc-trigger" id="rc-trigger" type="button" onclick="rcOpenModal()">
-    <svg width="13" height="13" viewBox="0 0 24 24" fill="currentColor">
+    <svg width="14" height="14" viewBox="0 0 24 24" fill="currentColor">
         <path d="M12 2C8.13 2 5 5.13 5 9c0 5.25 7 13 7 13s7-7.75 7-13c0-3.87-3.13-7-7-7zm0 9.5c-1.38 0-2.5-1.12-2.5-2.5s1.12-2.5 2.5-2.5 2.5 1.12 2.5 2.5-1.12 2.5-2.5 2.5z"/>
     </svg>
     <span class="rc-trigger__name"><?= htmlspecialcharsbx($arResult['CURRENT_REGION']['NAME']) ?></span>
@@ -250,9 +316,6 @@ var RC = {
     }
 };
 
-console.log('[RC] Загружен. Городов:', RC.cities.length);
-console.log('[RC] SHOW_CONFIRM:', RC.confirm.show, '| Город по IP:', RC.confirm.regionName);
-
 function rcH(s) {
     return String(s).replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;').replace(/"/g,'&quot;');
 }
@@ -265,7 +328,6 @@ function rcGetSiteAddress() {
 }
 
 function rcSelectCity(id, url) {
-    console.log('[RC] Выбран город id=' + id + ' url=' + url);
     var siteAddress = rcGetSiteAddress();
     var arDomains = siteAddress.indexOf(',') !== -1 ? siteAddress.split(',') : [siteAddress];
     arDomains.forEach(function(d) {
@@ -281,14 +343,8 @@ function rcSelectCity(id, url) {
     location.href = url || location.href;
 }
 
-// ── CONFIRM МОДАЛКА ───────────────────────────────────────────────
 function rcShowConfirm() {
-    if (!RC.confirm.show) {
-        console.log('[RC] Confirm не нужен');
-        return;
-    }
-    console.log('[RC] Показываем confirm для:', RC.confirm.regionName);
-
+    if (!RC.confirm.show) return;
     var overlay = document.createElement('div');
     overlay.className = 'rc-overlay';
     overlay.id = 'rc-confirm-overlay';
@@ -297,17 +353,15 @@ function rcShowConfirm() {
     };
     overlay.innerHTML =
         '<div class="rc-confirm">' +
-            '<button class="rc-confirm__close" onclick="rcHideConfirm()">&times;</button>' +
+            '<button class="rc-confirm__close-btn" onclick="rcHideConfirm()">×</button>' +
             '<div class="rc-confirm__city">' + rcH(RC.confirm.regionName) + '</div>' +
             '<div class="rc-confirm__question">Это ваш город?</div>' +
             '<div class="rc-confirm__btns">' +
-                '<button class="rc-btn rc-btn--yes" onclick="rcConfirmYes()">Да, верно</button>' +
+                '<button class="rc-btn rc-btn--yes" onclick="rcConfirmYes()">Да</button>' +
                 '<button class="rc-btn rc-btn--chg" onclick="rcHideConfirm();rcOpenModal()">Изменить</button>' +
             '</div>' +
         '</div>';
-
     document.body.appendChild(overlay);
-    console.log('[RC] Confirm добавлен в body');
 }
 
 function rcHideConfirm() {
@@ -320,11 +374,8 @@ function rcConfirmYes() {
     rcSelectCity(RC.confirm.regionId, RC.confirm.regionUrl || location.href);
 }
 
-// ── МОДАЛКА ВЫБОРА ГОРОДА ─────────────────────────────────────────
 function rcOpenModal() {
-    console.log('[RC] rcOpenModal()');
     rcHideConfirm();
-
     var existing = document.getElementById('rc-overlay');
     if (existing) {
         existing.style.display = 'flex';
@@ -381,7 +432,7 @@ function rcOpenModal() {
     var html =
         '<div id="rc-overlay" class="rc-overlay" onclick="if(event.target===this)rcCloseModal()">' +
             '<div class="rc-modal">' +
-                '<button class="rc-modal__close" onclick="rcCloseModal()">&times;</button>' +
+                '<button class="rc-modal__close-btn" onclick="rcCloseModal()">×</button>' +
                 '<div class="rc-modal__head">' +
                     '<div class="rc-search-wrap">' +
                         '<div class="rc-search">' +
@@ -401,13 +452,10 @@ function rcOpenModal() {
     var tmp = document.createElement('div');
     tmp.innerHTML = html;
     document.body.appendChild(tmp.firstElementChild);
-    console.log('[RC] Модалка добавлена в body');
-
     setTimeout(function() {
         var inp = document.getElementById('rc-input');
         if (inp) inp.focus();
-    }, 50);
-
+    }, 100);
     document.addEventListener('keydown', function(e) {
         if (e.key === 'Escape') rcCloseModal();
     });
@@ -424,11 +472,9 @@ function rcSearch(val) {
     if (!drop) return;
     drop.innerHTML = '';
     if (q.length < 2) { drop.classList.remove('is-open'); return; }
-
     var hits = RC.cities.filter(function(c) {
         return c.name.toLowerCase().indexOf(q) !== -1;
     });
-
     if (!hits.length) {
         drop.innerHTML = '<div class="rc-drop-none">Ничего не найдено</div>';
     } else {
@@ -468,6 +514,5 @@ function rcShowCities(sid) {
     });
 }
 
-// Показываем confirm при загрузке
 rcShowConfirm();
 </script>
