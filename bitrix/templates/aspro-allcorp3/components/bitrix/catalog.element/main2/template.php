@@ -580,24 +580,21 @@ $templateData['VIDEO'] = boolval($arResult['VIDEO']);
 						</div>
 					<? endif; ?>
 
-					<?php
-					// Получаем текущий город из данных компонента
-					$currentRegion = TSolution\Regionality::getCurrentRegion();
-					$cityName = $currentRegion['NAME'] ?? 'Ваш город';
-					?>
-					<div class="delivery-info font_13 color_666" style="margin-top: 8px; display: flex; align-items: center; flex-wrap: wrap; gap: 5px;">
-						<span>Доставка в город</span>
-						<a href="#"
-							class="regions__chooser js_city_chooser"
-							style="color: blue; display: inline-flex; align-items: center; text-decoration: none;"
-							data-event="jqm"
-							data-name="city_chooser_small"
-							data-param-form_id="city_chooser"
-							data-param-url="<?= urlencode($APPLICATION->GetCurUri()); ?>">
-							<span class="regions__name"><?= htmlspecialchars($cityName) ?></span>
-							<span class="more-arrow" style="margin-left: 3px; font-size: 10px;">▼</span>
-						</a>
-					</div>
+<?php
+// Получаем текущий город из данных компонента
+$currentRegion = TSolution\Regionality::getCurrentRegion();
+$cityName = $currentRegion['NAME'] ?? 'Ваш город';
+?>
+<div class="delivery-info font_13 color_666" style="margin-top: 8px; display: flex; align-items: center; flex-wrap: wrap; gap: 5px;">
+    <span>Доставка в город</span>
+    <button type="button"
+        class="regions__chooser"
+        style="color: blue; display: inline-flex; align-items: center; text-decoration: none; background: none; border: none; padding: 0; cursor: pointer; font-family: inherit;"
+        onclick="rcOpenModal()">
+        <span class="regions__name" style="border-bottom: 1px dashed blue;"><?= htmlspecialchars($cityName) ?></span>
+        <span class="more-arrow" style="margin-left: 3px; font-size: 10px;">▼</span>
+    </button>
+</div>
 				</div>
 			</div>
 		</div>
