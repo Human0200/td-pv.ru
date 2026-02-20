@@ -74,5 +74,9 @@ var RC = {
         regionUrl:  <?= json_encode($confirmUrl, JSON_UNESCAPED_UNICODE) ?>
     }
 };
-rcShowConfirm();
+
+if (RC.confirm.show && !sessionStorage.getItem('rc_confirm_shown')) {
+    rcShowConfirm();
+    sessionStorage.setItem('rc_confirm_shown', 'true');
+}
 </script>

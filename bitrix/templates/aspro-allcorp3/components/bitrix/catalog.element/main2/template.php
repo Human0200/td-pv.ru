@@ -586,7 +586,7 @@ $currentRegion = TSolution\Regionality::getCurrentRegion();
 $cityName = $currentRegion['NAME'] ?? 'Ваш город';
 ?>
 <div class="delivery-info font_13 color_666" style="margin-top: 8px; display: flex; align-items: center; flex-wrap: wrap; gap: 5px;">
-    <span>Доставка в город</span>
+    <span>Доставка в </span>
     <button type="button"
         class="regions__chooser"
         style="color: blue; display: inline-flex; align-items: center; text-decoration: none; background: none; border: none; padding: 0; cursor: pointer; font-family: inherit;"

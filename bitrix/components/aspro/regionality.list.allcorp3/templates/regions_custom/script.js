@@ -1,5 +1,8 @@
 
 
+$(document).ready(function () {
+$(".mobilemenu__menu--regions").hide();
+});
 function rcH(s) {
     return String(s).replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;').replace(/"/g,'&quot;');
 }
@@ -24,11 +27,18 @@ function rcSelectCity(id, url) {
         if (!d) return;
         $.cookie('current_region', id, { path: '/', domain: d });
     });
+    sessionStorage.removeItem('rc_confirm_shown');
     location.href = url || location.href;
 }
 
 function rcShowConfirm() {
     if (!RC.confirm.show) return;
+    
+    // Проверяем, не открыто ли уже окно подтверждения
+    if (document.getElementById('rc-confirm-overlay')) {
+        return; // Если окно уже есть - ничего не делаем
+    }
+    
     var overlay = document.createElement('div');
     overlay.className = 'rc-overlay';
     overlay.id = 'rc-confirm-overlay';
@@ -49,6 +59,7 @@ function rcShowConfirm() {
 }
 
 function rcHideConfirm() {
+    RC.confirm.show = false;
     var el = document.getElementById('rc-confirm-overlay');
     if (el) el.remove();
 }
