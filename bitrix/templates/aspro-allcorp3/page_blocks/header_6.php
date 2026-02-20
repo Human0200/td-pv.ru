@@ -115,7 +115,7 @@ if(!$bMarginHeader) {
 
 				<?if($arRegion):?>
 					<?//regions?>
-					<div class="header__top-item icon-block--with_icon icon-block--only_icon-1100">
+					<div style = "display:none;" class="header__top-item icon-block--with_icon icon-block--only_icon-1100">
 						<?
 						$arRegionsParams = array();
 						if($bAjax) {
