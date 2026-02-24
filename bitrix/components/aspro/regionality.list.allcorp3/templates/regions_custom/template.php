@@ -19,6 +19,48 @@ $jsRegions = \Bitrix\Main\Config\Option::get(VENDOR_MODULE_ID, 'REGIONALITY_SEAR
     ? CUtil::PhpToJsObject($arResult['JS_REGIONS'])
     : '{}';
 
+// ── Привязка товара к городам ─────────────────────────────────────────────
+// В шаблоне детальной страницы товара перед подключением компонента добавьте:
+//   $GLOBALS['RC_PRODUCT_REGION_LINK'] = $arResult['PROPERTIES']['REGION_LINK']['VALUE'];
+// Если свойство пустое или не задано — товар доступен во всех городах.
+
+// ID Нижнего Новгорода в вашем инфоблоке регионов — ЗАМЕНИТЕ на реальный
+$defaultCityId = 6157;
+
+$allowedCityIds  = [];
+$cityUnavailable = false;
+
+if (!empty($GLOBALS['RC_PRODUCT_REGION_LINK'])) {
+    foreach ((array)$GLOBALS['RC_PRODUCT_REGION_LINK'] as $val) {
+        $id = (int)$val;
+        if ($id > 0) $allowedCityIds[] = $id;
+    }
+
+    if ($currentId && !empty($allowedCityIds) && !in_array((int)$currentId, $allowedCityIds)) {
+        $cityUnavailable = true;
+
+        // Переключаем на НН, если НН есть в списке, иначе на первый доступный
+        $fallbackId = in_array($defaultCityId, $allowedCityIds) ? $defaultCityId : $allowedCityIds[0];
+
+        // Обновляем куку на сервере
+        $domain = $_SERVER['HTTP_HOST'];
+        setcookie('current_region', $fallbackId, [
+            'expires'  => time() + 60 * 60 * 24 * 365,
+            'path'     => '/',
+            'domain'   => $domain,
+            'samesite' => 'Lax',
+        ]);
+
+        // Обновляем текущий регион для отображения в кнопке
+        $currentId = $fallbackId;
+        if (isset($arResult['REGIONS'][$fallbackId])) {
+            $arResult['CURRENT_REGION'] = $arResult['REGIONS'][$fallbackId];
+            $arResult['CURRENT_REGION']['ID'] = $fallbackId;
+        }
+    }
+}
+// ─────────────────────────────────────────────────────────────────────────
+
 $cities = [];
 foreach (($arResult['REGIONS'] ?? []) as $city) {
     $cities[] = [
@@ -61,12 +103,15 @@ $confirmUrl = !$isSameDomain ? ($arResult['REGIONS'][$arResult['REAL_REGION']['I
 
 <script>
 var RC = {
-    regions:   <?= $jsRegions ?>,
-    cities:    <?= json_encode($cities, JSON_UNESCAPED_UNICODE) ?>,
-    sections1: <?= json_encode($sections1, JSON_UNESCAPED_UNICODE) ?>,
-    sections2: <?= json_encode($sections2, JSON_UNESCAPED_UNICODE) ?>,
-    favs:      <?= json_encode($favs, JSON_UNESCAPED_UNICODE) ?>,
-    flat:      <?= $flat ? 'true' : 'false' ?>,
+    regions:        <?= $jsRegions ?>,
+    cities:         <?= json_encode($cities, JSON_UNESCAPED_UNICODE) ?>,
+    sections1:      <?= json_encode($sections1, JSON_UNESCAPED_UNICODE) ?>,
+    sections2:      <?= json_encode($sections2, JSON_UNESCAPED_UNICODE) ?>,
+    favs:           <?= json_encode($favs, JSON_UNESCAPED_UNICODE) ?>,
+    flat:           <?= $flat ? 'true' : 'false' ?>,
+    allowedCityIds: <?= json_encode($allowedCityIds) ?>,
+    unavailable:    <?= $cityUnavailable ? 'true' : 'false' ?>,
+    defaultCityId:  <?= (int)$defaultCityId ?>,
     confirm: {
         show:       <?= $arResult['SHOW_REGION_CONFIRM'] ? 'true' : 'false' ?>,
         regionName: <?= json_encode($arResult['REAL_REGION']['NAME'] ?? '', JSON_UNESCAPED_UNICODE) ?>,
@@ -74,9 +119,5 @@ var RC = {
         regionUrl:  <?= json_encode($confirmUrl, JSON_UNESCAPED_UNICODE) ?>
     }
 };
-
-if (RC.confirm.show && !sessionStorage.getItem('rc_confirm_shown')) {
-    rcShowConfirm();
-    sessionStorage.setItem('rc_confirm_shown', 'true');
-}
+rcShowConfirm();
 </script>

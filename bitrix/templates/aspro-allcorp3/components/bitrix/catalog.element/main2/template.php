@@ -580,82 +580,60 @@ $templateData['VIDEO'] = boolval($arResult['VIDEO']);
 						</div>
 					<? endif; ?>
 
-					<?php
-					\Bitrix\Main\Loader::includeModule('iblock');
+<?php
+\Bitrix\Main\Loader::includeModule('iblock');
 
-					// 0) дефолт
-					$defaultCityId   = 6157;
-					$defaultCityName = 'Нижний Новгород';
+// 0) дефолт
+$defaultCityId   = 6157;
+$defaultCityName = 'Нижний Новгород';
 
-					// 1) текущий город (берётся из вашей региональности: cookie/гео)
-					$currentRegion = TSolution\Regionality::getCurrentRegion();
-					$currentRegionId   = (int)($currentRegion['ID'] ?? 0);
-					$currentRegionName = (string)($currentRegion['NAME'] ?? '');
+// 1) текущий город
+$currentRegion     = TSolution\Regionality::getCurrentRegion();
+$currentRegionId   = (int)($currentRegion['ID'] ?? 0);
+$currentRegionName = (string)($currentRegion['NAME'] ?? '');
 
-					// 2) привязанные города товара (ВАЖНО: берем ID из PROPERTIES, а не DISPLAY_PROPERTIES)
-					$offer = is_array($arCurrentOffer) ? $arCurrentOffer : [];
-					$val = $offer['PROPERTIES']['LINK_REGION']['VALUE']
-						?? $arResult['PROPERTIES']['LINK_REGION']['VALUE']
-						?? [];
+// 2) привязанные города товара
+$offer = is_array($arCurrentOffer) ? $arCurrentOffer : [];
+$val   = $offer['PROPERTIES']['LINK_REGION']['VALUE']
+    ?? $arResult['PROPERTIES']['LINK_REGION']['VALUE']
+    ?? [];
 
-					$allowedCityIds = array_values(array_unique(array_filter(array_map('intval', (array)$val))));
-					$hasBinding = !empty($allowedCityIds);
+$allowedCityIds = array_values(array_unique(array_filter(array_map('intval', (array)$val))));
+$hasBinding     = !empty($allowedCityIds);
 
-					// 3) если гео/кука не дали город => ставим дефолт (НН)
-					$needSetDefaultBecauseNoCity = ($currentRegionId <= 0);
+// 3) если есть привязка и текущий город не в списке — нужно уведомление
+$needAutoSwitch = ($hasBinding && $currentRegionId > 0 && !in_array($currentRegionId, $allowedCityIds, true));
 
-					// 4) если есть привязка и текущий город не в списке => автопереключаем на НН + уведомление
-					$needAutoSwitch = ($hasBinding && $currentRegionId > 0 && !in_array($currentRegionId, $allowedCityIds, true));
+// 4) что показывать в строке "Доставка в ..."
+if ($needAutoSwitch) {
+    $displayCityName = $defaultCityName;
+} else {
+    $displayCityName = $currentRegionName ?: $defaultCityName;
+}
 
-					// 5) что показывать в интерфейсе "Доставка в ..."
-					if ($needSetDefaultBecauseNoCity || $needAutoSwitch) {
-						$displayCityName = $defaultCityName;
-					} else {
-						$displayCityName = $currentRegionName ?: $defaultCityName;
-					}
+// 5) список городов для модалки
+$modalCityIds = $hasBinding ? $allowedCityIds : null;
+?>
 
-					// 6) что передавать в модалку/поиск
-					// - если привязки нет => полный список (ничего не передаем)
-					// - если привязка есть => только эти города
-					$modalCityIds = $hasBinding ? $allowedCityIds : null;
-					?>
+<script>
+    window.RC_PAGE_ALLOWED_IDS = <?= $modalCityIds ? CUtil::PhpToJSObject($modalCityIds, false, true) : 'null' ?>;
 
-					<script>
-						// чтобы rcOpenModal() без аргумента тоже знал ограничения текущей карточки
-						window.RC_PAGE_ALLOWED_IDS = <?= $modalCityIds ? CUtil::PhpToJSObject($modalCityIds, false, true) : 'null' ?>;
+    // Показываем попап — город меняется только когда пользователь нажмёт "Понятно"
+    if (<?= $needAutoSwitch ? 'true' : 'false' ?>) {
+        if (typeof rcShowUnavailable === 'function') rcShowUnavailable();
+    }
+</script>
 
-						// автопереключение на НН если нужно (без зацикливания)
-						(function() {
-							var needNoCity = <?= $needSetDefaultBecauseNoCity ? 'true' : 'false' ?>;
-							var needSwitch = <?= $needAutoSwitch ? 'true' : 'false' ?>;
-							if (!needNoCity && !needSwitch) return;
-
-							var key = 'rc_autoswitch_done_<?= (int)$arResult['ID'] ?>';
-							if (sessionStorage.getItem(key)) return;
-
-							sessionStorage.setItem(key, '1');
-
-							if (needSwitch) {
-								sessionStorage.setItem('rc_notice', 'Товар недоступен в выбранном городе. Установлен город: <?= CUtil::JSEscape($defaultCityName) ?>.');
-							} else {
-								sessionStorage.setItem('rc_notice', 'Город не определён. Установлен город: <?= CUtil::JSEscape($defaultCityName) ?>.');
-							}
-
-							// ставим куку через ваш штатный механизм и перезагружаем страницу
-							if (typeof rcSelectCity === 'function') rcSelectCity(<?= (int)$defaultCityId ?>);
-						})();
-					</script>
-
-					<div class="delivery-info font_13 color_666" style="margin-top:8px; display:flex; align-items:center; flex-wrap:wrap; gap:5px;">
-						<span>Доставка в </span>
-						<button type="button"
-							class="regions__chooser"
-							style="color:blue; display:inline-flex; align-items:center; text-decoration:none; background:none; border:none; padding:0; cursor:pointer; font-family:inherit;"
-							onclick="rcOpenModal(<?= $modalCityIds ? CUtil::PhpToJSObject($modalCityIds, false, true) : '' ?>)">
-							<span class="regions__name" style="border-bottom:1px dashed blue;"><?= htmlspecialchars($displayCityName) ?></span>
-							<span class="more-arrow" style="margin-left:3px; font-size:10px;">▼</span>
-						</button>
-					</div>
+<div class="delivery-info font_13 color_666" style="margin-top:8px; display:flex; align-items:center; flex-wrap:wrap; gap:5px;">
+    <span>Доставка в </span>
+    <button type="button"
+        class="regions__chooser"
+        style="color:blue; display:inline-flex; align-items:center; text-decoration:none; background:none; border:none; padding:0; cursor:pointer; font-family:inherit;"
+        onclick="rcOpenModal()">
+        <span class="regions__name" style="border-bottom:1px dashed blue;"><?= htmlspecialchars($displayCityName) ?></span>
+        <span class="more-arrow" style="margin-left:3px; font-size:10px;">▼</span>
+    </button>
+</div>
 				</div>
 			</div>
 		</div>
