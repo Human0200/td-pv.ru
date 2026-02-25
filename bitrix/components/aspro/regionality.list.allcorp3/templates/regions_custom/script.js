@@ -67,6 +67,8 @@ function rcShowUnavailable() {
     // Не показываем если нет привязки городов
     if (!window.RC_PAGE_ALLOWED_IDS || !window.RC_PAGE_ALLOWED_IDS.length) return;
 
+    //Не показываем если текущий город в списке
+
     var allowedIds = window.RC_PAGE_ALLOWED_IDS.map(function(id) { return parseInt(id, 10); });
     var defaultId  = parseInt(RC.defaultCityId, 10);
 
@@ -88,20 +90,21 @@ function rcShowUnavailable() {
     overlay.onclick = function(e) {
         if (e.target === overlay) rcHideUnavailable();
     };
-    overlay.innerHTML =
-        '<div class="rc-confirm rc-confirm--unavailable">' +
-            '<button class="rc-confirm__close-btn" onclick="rcHideUnavailable()">×</button>' +
-            '<div class="rc-confirm__icon">⚠</div>' +
-            '<div class="rc-confirm__text">' +
-                'Товар не доставляется в ваш регион.<br>' +
-                'Будет установлен <strong>' + rcH(defaultName) + '</strong>.' +
-            '</div>' +
-            '<div class="rc-confirm__btns">' +
-                '<button class="rc-btn rc-btn--yes" onclick="rcHideUnavailable();rcSelectCity(' + defaultId + ')">Понятно</button>' +
-                '<button class="rc-btn rc-btn--chg" onclick="rcHideUnavailable();rcOpenModal()">Изменить</button>' +
-            '</div>' +
-        '</div>';
-    document.body.appendChild(overlay);
+    rcSelectCity(defaultId);
+    // overlay.innerHTML =
+    //     '<div class="rc-confirm rc-confirm--unavailable">' +
+    //         '<button class="rc-confirm__close-btn" onclick="rcHideUnavailable()">×</button>' +
+    //         '<div class="rc-confirm__icon">⚠</div>' +
+    //         '<div class="rc-confirm__text">' +
+    //             'Товар не доставляется в ваш регион.<br>' +
+    //             'Будет установлен <strong>' + rcH(defaultName) + '</strong>.' +
+    //         '</div>' +
+    //         '<div class="rc-confirm__btns">' +
+    //             '<button class="rc-btn rc-btn--yes" onclick="rcHideUnavailable();rcSelectCity(' + defaultId + ')">Понятно</button>' +
+    //             '<button class="rc-btn rc-btn--chg" onclick="rcHideUnavailable();rcOpenModal()">Изменить</button>' +
+    //         '</div>' +
+    //     '</div>';
+    // document.body.appendChild(overlay);
 }
 
 function rcHideUnavailable() {
