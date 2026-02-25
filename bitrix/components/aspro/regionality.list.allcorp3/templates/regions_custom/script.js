@@ -74,7 +74,9 @@ function rcShowUnavailable() {
 
     // Находим текущий город
     var currentCity = null;
-    RC.cities.forEach(function(c) { if (c.isCurrent) currentCity = c; });
+    RC.cities.forEach(function(c) { 
+        if (c.isCurrent) currentCity = c; 
+    });
     if (!currentCity) return;
 
     // Если текущий город в списке или это НН — уведомление не нужно
@@ -152,17 +154,20 @@ function rcOpenModal() {
 
     var col1 = '';
     if (RC.sections1.length) {
-        col1 = '<div class="rc-col" id="rc-col1"><div class="rc-col__title">' +
-            (RC.sections2.length ? 'Округ' : 'Регион') + '</div>';
+        col1 = '<div class="rc-col" id="rc-col1">' +
+            '<div class="rc-col__title">' + (RC.sections2.length ? 'Округ' : 'Регион') + '</div>' +
+            '<div class="rc-col-content">';
         RC.sections1.forEach(function(s) {
             col1 += '<div class="rc-sec" data-id="' + s.id + '" data-lv="1" onclick="rcClickSec(this)">' + rcH(s.name) + '</div>';
         });
-        col1 += '</div>';
+        col1 += '</div></div>';
     }
 
     var col2 = '';
     if (RC.sections2.length) {
-        col2 = '<div class="rc-col" id="rc-col2"><div class="rc-col__title">Регион</div>';
+        col2 = '<div class="rc-col" id="rc-col2">' +
+            '<div class="rc-col__title">Регион</div>' +
+            '<div class="rc-col-content">';
         RC.sections2.forEach(function(p) {
             col2 += '<div data-pid="' + p.pid + '" style="display:none">';
             p.children.forEach(function(c) {
@@ -170,10 +175,12 @@ function rcOpenModal() {
             });
             col2 += '</div>';
         });
-        col2 += '</div>';
+        col2 += '</div></div>';
     }
 
-    var col3 = '<div class="rc-col" id="rc-col3"><div class="rc-col__title">Город</div>';
+    var col3 = '<div class="rc-col" id="rc-col3">' +
+        '<div class="rc-col__title">Город</div>' +
+        '<div class="rc-col-content">';
     visibleCities.forEach(function(c) {
         var show = (RC.flat || hasFilter) ? '' : ' style="display:none"';
         if (c.isCurrent) {
@@ -184,7 +191,7 @@ function rcOpenModal() {
                 '</div>';
         }
     });
-    col3 += '</div>';
+    col3 += '</div></div>';
 
     var favsHtml = '';
     if (RC.favs.length && !hasFilter) {
@@ -256,15 +263,32 @@ function rcSearch(val) {
 }
 
 function rcClickSec(el) {
-    var lv  = parseInt(el.dataset.lv);
+    var lv = parseInt(el.dataset.lv);
     var sid = parseInt(el.dataset.id);
-    el.closest('.rc-col').querySelectorAll('.rc-sec').forEach(function(s) { s.classList.remove('is-active'); });
+    
+    // Убираем активный класс у всех в текущей колонке
+    var col = el.closest('.rc-col');
+    if (col) {
+        var content = col.querySelector('.rc-col-content');
+        if (content) {
+            content.querySelectorAll('.rc-sec').forEach(function(s) {
+                s.classList.remove('is-active');
+            });
+        }
+    }
+    
     el.classList.add('is-active');
+    
     if (lv === 1) {
         var col2 = document.getElementById('rc-col2');
-        if (col2) col2.querySelectorAll('[data-pid]').forEach(function(p) {
-            p.style.display = parseInt(p.dataset.pid) === sid ? '' : 'none';
-        });
+        if (col2) {
+            var content2 = col2.querySelector('.rc-col-content');
+            if (content2) {
+                content2.querySelectorAll('[data-pid]').forEach(function(p) {
+                    p.style.display = parseInt(p.dataset.pid) === sid ? '' : 'none';
+                });
+            }
+        }
         rcShowCities(-1);
     } else if (lv === 2) {
         rcShowCities(sid);
@@ -274,7 +298,11 @@ function rcClickSec(el) {
 function rcShowCities(sid) {
     var col3 = document.getElementById('rc-col3');
     if (!col3) return;
-    col3.querySelectorAll('[data-sid]').forEach(function(el) {
+    
+    var content = col3.querySelector('.rc-col-content');
+    if (!content) return;
+    
+    content.querySelectorAll('[data-sid]').forEach(function(el) {
         el.style.display = sid === -1 ? 'none'
             : (parseInt(el.dataset.sid) === sid || sid === 0 ? '' : 'none');
     });
